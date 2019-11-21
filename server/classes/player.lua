@@ -380,14 +380,18 @@ function CreateExtendedPlayer(player, accounts, inventory, job, loadout, name, l
 		if ESX.DoesJobExist(job, grade) then
 			local jobObject, gradeObject = ESX.Jobs[job], ESX.Jobs[job].grades[grade]
 
-			self.job.id    = jobObject.id
-			self.job.name  = jobObject.name
-			self.job.label = jobObject.label
+			self.job.id    	  = jobObject.id
+			self.job.name  	  = jobObject.name
+			self.job.label	  = jobObject.label
+			self.job.label_sc = jobObject.label_sc
+			self.job.label_tc = jobObject.label_tc
 
-			self.job.grade        = tonumber(grade)
-			self.job.grade_name   = gradeObject.name
-			self.job.grade_label  = gradeObject.label
-			self.job.grade_salary = gradeObject.salary
+			self.job.grade        	= tonumber(grade)
+			self.job.grade_name   	= gradeObject.name
+			self.job.grade_label  	= gradeObject.label
+			self.job.grade_label_sc = gradeObject.label_sc
+			self.job.grade_label_tc = gradeObject.label_tc
+			self.job.grade_salary 	= gradeObject.salary
 
 			self.job.skin_male    = {}
 			self.job.skin_female  = {}
@@ -525,12 +529,12 @@ function CreateExtendedPlayer(player, accounts, inventory, job, loadout, name, l
 		return nil
 	end
 
-	self.showNotification = function(msg)
-		TriggerClientEvent('esx:showNotification', self.source, msg)
+	self.showNotification = function(msg, ...)
+		TriggerClientEvent('esx:showNotificationForServer', self.source, msg, ...)
 	end
 
-	self.showHelpNotification = function(msg)
-		TriggerClientEvent('esx:showHelpNotification', self.source, msg)
+	self.showHelpNotification = function(msg, ...)
+		TriggerClientEvent('esx:showHelpNotificationForServer', self.source, msg, ...)
 	end
 
 	return self

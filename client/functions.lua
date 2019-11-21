@@ -1047,6 +1047,13 @@ ESX.ShowInventory = function()
 
 	for k,v in ipairs(ESX.PlayerData.inventory) do
 		if v.count > 0 then
+
+			if Config.Locale == 'tc' then
+				v.label = v.label_tc
+			elseif Config.Locale == 'sc' then
+				v.label = v.label_sc
+			end
+
 			currentWeight = currentWeight + (v.weight * v.count)
 			table.insert(elements, {
 				label     = ('%s x%s'):format(v.label, v.count),
@@ -1282,14 +1289,29 @@ AddEventHandler('esx:showNotification', function(msg)
 	ESX.ShowNotification(msg)
 end)
 
+RegisterNetEvent('esx:showNotificationForServer')
+AddEventHandler('esx:showNotificationForServer', function(msg, ...)
+	ESX.ShowNotification(_U(msg, ...))
+end)
+
 RegisterNetEvent('esx:showAdvancedNotification')
 AddEventHandler('esx:showAdvancedNotification', function(title, subject, msg, icon, iconType)
 	ESX.ShowAdvancedNotification(title, subject, msg, icon, iconType)
 end)
 
+RegisterNetEvent('esx:showPayCheckNotification')
+AddEventHandler('esx:showPayCheckNotification', function(title, subject, msg, price, icon, iconType)
+	ESX.ShowAdvancedNotification(_U(title), _U(subject), _U(msg,price), icon, iconType)
+end)
+
 RegisterNetEvent('esx:showHelpNotification')
 AddEventHandler('esx:showHelpNotification', function(msg)
 	ESX.ShowHelpNotification(msg)
+end)
+
+RegisterNetEvent('esx:showHelpNotificationForServer')
+AddEventHandler('esx:showHelpNotificationForServer', function(msg, ...)
+	ESX.ShowHelpNotification(_U(msg, ...))
 end)
 
 -- SetTimeout

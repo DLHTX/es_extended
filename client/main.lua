@@ -31,6 +31,14 @@ AddEventHandler('esx:playerLoaded', function(xPlayer)
 			grade_label = ''
 		})
 
+		if Config.Locale == 'tc' then
+			xPlayer.job.label = xPlayer.job.label_tc
+			xPlayer.job.grade_label = xPlayer.job.grade_label_tc
+		elseif Config.Locale == 'sc' then
+			xPlayer.job.label = xPlayer.job.label_sc
+			xPlayer.job.grade_label = xPlayer.job.grade_label_sc
+		end
+
 		ESX.UI.HUD.UpdateElement('job', {
 			job_label   = xPlayer.job.label,
 			grade_label = xPlayer.job.grade_label
@@ -259,6 +267,15 @@ end)
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
 	if Config.EnableHud then
+		
+		if Config.Locale == 'tc' then
+			job.label = job.label_tc
+			job.grade_label = job.grade_label_tc
+		elseif Config.Locale == 'sc' then
+			job.label = job.label_sc
+			job.grade_label = job.grade_label_sc
+		end
+
 		ESX.UI.HUD.UpdateElement('job', {
 			job_label   = job.label,
 			grade_label = job.grade_label

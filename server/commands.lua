@@ -2,7 +2,7 @@ TriggerEvent('es:addGroupCommand', 'tp', 'admin', function(source, args, user)
 	local x = tonumber(args[1])
 	local y = tonumber(args[2])
 	local z = tonumber(args[3])
-
+	
 	if x and y and z then
 		TriggerClientEvent('esx:teleport', source, {
 			x = x,
@@ -116,9 +116,9 @@ TriggerEvent('es:addGroupCommand', 'setmoney', 'admin', function(source, args, u
 	end
 
 	print('es_extended: ' .. GetPlayerName(source) .. ' just set $' .. money_amount .. ' (' .. money_type .. ') to ' .. xPlayer.name)
-
+	
 	if xPlayer.source ~= _source then
-		TriggerClientEvent('esx:showNotification', xPlayer.source, _U('money_set', money_amount, money_type))
+		TriggerClientEvent('esx:showNotificationForServer', xPlayer.source, 'money_set', money_amount, money_type)
 	end
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
@@ -134,10 +134,10 @@ TriggerEvent('es:addGroupCommand', 'giveaccountmoney', 'admin', function(source,
 		if xPlayer.getAccount(account) ~= nil then
 			xPlayer.addAccountMoney(account, amount)
 		else
-			TriggerClientEvent('esx:showNotification', _source, _U('invalid_account'))
+			TriggerClientEvent('esx:showNotificationForServer', _source, 'invalid_account')
 		end
 	else
-		TriggerClientEvent('esx:showNotification', _source, _U('amount_invalid'))
+		TriggerClientEvent('esx:showNotificationForServer', _source, 'amount_invalid')
 	end
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
@@ -153,10 +153,10 @@ TriggerEvent('es:addGroupCommand', 'giveitem', 'admin', function(source, args, u
 		if xPlayer.getInventoryItem(item) ~= nil then
 			xPlayer.addInventoryItem(item, count)
 		else
-			TriggerClientEvent('esx:showNotification', _source, _U('invalid_item'))
+			TriggerClientEvent('esx:showNotificationForServer', _source, 'invalid_item')
 		end
 	else
-		TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
+		TriggerClientEvent('esx:', _source, _U('invalid_amount'))
 	end
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
