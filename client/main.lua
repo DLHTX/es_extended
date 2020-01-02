@@ -283,72 +283,20 @@ AddEventHandler('esx:setJob', function(job)
 	end
 end)
 
-RegisterNetEvent('esx:loadIPL')
-AddEventHandler('esx:loadIPL', function(name)
-	Citizen.CreateThread(function()
-		RequestIpl(name)
-	end)
-end)
-
-RegisterNetEvent('esx:unloadIPL')
-AddEventHandler('esx:unloadIPL', function(name)
-	Citizen.CreateThread(function()
-		RemoveIpl(name)
-	end)
-end)
-
-RegisterNetEvent('esx:playAnim')
-AddEventHandler('esx:playAnim', function(dict, anim)
-	Citizen.CreateThread(function()
-		local playerPed = PlayerPedId()
-		RequestAnimDict(dict)
-
-		while not HasAnimDictLoaded(dict) do
-			Citizen.Wait(1)
-		end
-
-		TaskPlayAnim(playerPed, dict, anim, 1.0, -1.0, 20000, 0, 1, true, true, true)
-	end)
-end)
-
-RegisterNetEvent('esx:playEmote')
-AddEventHandler('esx:playEmote', function(emote)
-	Citizen.CreateThread(function()
-
-		local playerPed = PlayerPedId()
-
-		TaskStartScenarioInPlace(playerPed, emote, 0, false);
-		Citizen.Wait(20000)
-		ClearPedTasks(playerPed)
-
-	end)
-end)
-
 RegisterNetEvent('esx:spawnVehicle')
-AddEventHandler('esx:spawnVehicle', function(model)
-	local playerPed = PlayerPedId()
-	local coords    = GetEntityCoords(playerPed)
+AddEventHandler('esx:spawnVehicle', function(vehicle)
+	local model = (type(vehicle) == 'number' and vehicle or GetHashKey(vehicle))
 
-	ESX.Game.SpawnVehicle(model, coords, 90.0, function(vehicle)
-		TaskWarpPedIntoVehicle(playerPed,  vehicle, -1)
-	end)
-end)
-
-RegisterNetEvent('esx:spawnObject')
-AddEventHandler('esx:spawnObject', function(model)
-	local playerPed = PlayerPedId()
-	local coords    = GetEntityCoords(playerPed)
-	local forward   = GetEntityForwardVector(playerPed)
-	local x, y, z   = table.unpack(coords + forward * 1.0)
-
-	ESX.Game.SpawnObject(model, {
-		x = x,
-		y = y,
-		z = z
-	}, function(obj)
-		SetEntityHeading(obj, GetEntityHeading(playerPed))
-		PlaceObjectOnGroundProperly(obj)
-	end)
+	if IsModelInCdimage(model) then
+		local playerPed = PlayerPedId()
+		local coords    = GetEntityCoords(playerPed)
+	
+		ESX.Game.SpawnVehicle(model, coords, 90.0, function(vehicle)
+			TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
+		end)
+	else
+		TriggerEvent('chat:addMessage', { args = { '^1SYSTEM', 'Invalid vehicle model.' } })
+	end
 end)
 
 RegisterNetEvent('esx:pickup')
@@ -391,36 +339,43 @@ AddEventHandler('esx:pickupWeapon', function(weaponPickup, weaponName, ammo)
 	CreateAmbientPickup(weaponHash, pickupCoords, 0, ammo, 1, false, true)
 end)
 
-RegisterNetEvent('esx:spawnPed')
-AddEventHandler('esx:spawnPed', function(model)
-	model           = (tonumber(model) ~= nil and tonumber(model) or GetHashKey(model))
+RegisterNetEvent('esx:deleteVehicle')
+AddEventHandler('esx:deleteVehicle', function(radius)
 	local playerPed = PlayerPedId()
-	local coords    = GetEntityCoords(playerPed)
-	local forward   = GetEntityForwardVector(playerPed)
-	local x, y, z   = table.unpack(coords + forward * 1.0)
 
-	Citizen.CreateThread(function()
-		RequestModel(model)
+	if radius and tonumber(radius) then
+		radius = tonumber(radius) + 0.01
+		local vehicles = ESX.Game.GetVehiclesInArea(GetEntityCoords(playerPed), radius)
 
-		while not HasModelLoaded(model) do
-			Citizen.Wait(1)
+		for k,entity in ipairs(vehicles) do
+			local attempt = 0
+
+			while not NetworkHasControlOfEntity(entity) and attempt < 100 and DoesEntityExist(entity) do
+				Citizen.Wait(100)
+				NetworkRequestControlOfEntity(entity)
+				attempt = attempt + 1
+			end
+
+			if DoesEntityExist(entity) and NetworkHasControlOfEntity(entity) then
+				ESX.Game.DeleteVehicle(entity)
+			end
+		end
+	else
+		local vehicle, attempt = ESX.Game.GetVehicleInDirection(), 0
+
+		if IsPedInAnyVehicle(playerPed, true) then
+			vehicle = GetVehiclePedIsIn(playerPed, false)
 		end
 
-		CreatePed(5, model, x, y, z, 0.0, true, false)
-	end)
-end)
+		while not NetworkHasControlOfEntity(vehicle) and attempt < 100 and DoesEntityExist(vehicle) do
+			Citizen.Wait(100)
+			NetworkRequestControlOfEntity(vehicle)
+			attempt = attempt + 1
+		end
 
-RegisterNetEvent('esx:deleteVehicle')
-AddEventHandler('esx:deleteVehicle', function()
-	local playerPed = PlayerPedId()
-	local vehicle   = ESX.Game.GetVehicleInDirection()
-
-	if IsPedInAnyVehicle(playerPed, true) then
-		vehicle = GetVehiclePedIsIn(playerPed, false)
-	end
-
-	if DoesEntityExist(vehicle) then
-		ESX.Game.DeleteVehicle(vehicle)
+		if DoesEntityExist(vehicle) and NetworkHasControlOfEntity(vehicle) then
+			ESX.Game.DeleteVehicle(vehicle)
+		end
 	end
 end)
 
