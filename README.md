@@ -1,5 +1,6 @@
 # es_extended
-es_extended is a roleplay framework for FiveM. It is developed on top of EssentialMode (aka ES), thus commonly named ESX - the **Es**sentialMode E**x**tended framework for FiveM.
+
+es_extended is a roleplay framework for FiveM. It is developed on top of EssentialMode (aka ES), where the project ESX is originating from - the **Es**sentialMode E**x**tended framework for FiveM.
 
 es_extended 是一个基于FiveM的角色扮演框架，它是在EssentialMode（又名ES）的基础上开发的，因此通常被称为ESX-FiveM的基本模式扩展框架。
 
@@ -127,7 +128,7 @@ UPDATE `job_grades` SET `label_sc`='待业',`label_tc`='待業' WHERE `name`='un
 ### License
 es_extended - EssentialMode Extended framework for FiveM
 
-Copyright (C) 2015-2019 Jérémie N'gadi
+Copyright (C) 2015-2020 Jérémie N'gadi
 
 This program Is free software: you can redistribute it And/Or modify it under the terms Of the GNU General Public License As published by the Free Software Foundation, either version 3 Of the License, Or (at your option) any later version.
 
