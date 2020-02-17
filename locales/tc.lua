@@ -1,6 +1,5 @@
 Locales['tc'] = {
   -- Inventory
-  ['cash'] = '現金',
   ['inventory'] = '庫存 %s / %s',
   ['use'] = '使用',
   ['give'] = '贈送',
@@ -23,8 +22,6 @@ Locales['tc'] = {
   ['received_weapon_withammo'] = '妳收到了~b~%s~s~和~o~%sx~s~ %s~s~，來自~b~%s~s~',
   ['received_weapon_hasalready'] = '~b~%s~s~試圖給妳~y~%s~s~，但妳已經擁有了',
   ['received_weapon_noweapon'] = '~b~%s~s~s試圖給妳~y~%s~s~彈藥，但妳沒有那個武器',
-  ['gave_money'] = '妳將~g~$%s~s~贈給了~y~%s~s~',
-  ['received_money'] = '妳收到了~g~$%s~s~ from ~b~%s~s~',
   ['gave_account_money'] = '妳將 ~g~$%s~s~ (%s) 給予 ~y~%s~s~',
   ['received_account_money'] = '妳收到了~g~$%s~s~ (%s) 來自 ~b~%s~s~',
   ['amount_invalid'] = '無效數量',
@@ -33,7 +30,6 @@ Locales['tc'] = {
   ['imp_invalid_quantity'] = '操作失敗，無效數量',
   ['imp_invalid_amount'] = '操作失敗，無效金額',
   ['threw_standard'] = '妳丟棄了~y~%sx~s~~b~%s~s~',
-  ['threw_money'] = '妳丟棄了~g~$%s~s~~b~現金~s~',
   ['threw_account'] = '妳丟棄了~g~$%s~s~~b~%s~s~',
   ['threw_weapon'] = '妳丟棄了~b~%s~s~',
   ['threw_weapon_ammo'] = '妳丟棄了~b~%s~s~和~o~%sx%s~s~',
@@ -50,7 +46,9 @@ Locales['tc'] = {
   ['company_nomoney'] = '妳受雇的公司太窮了，無法支付妳的工資。',
   ['received_paycheck'] = '收到轉賬',
   ['bank'] = '花園銀行',
-  ['black_money'] = '黑錢',
+  ['account_bank'] = '銀行',
+  ['account_black_money'] = '黑錢',
+  ['account_money'] = '現金',
   
   ['act_imp'] = '操作失敗',
   ['in_vehicle'] = '請離開載具',
@@ -75,7 +73,6 @@ Locales['tc'] = {
   ['chat_clear_all'] = '清除所有人的聊天紀錄',
   ['command_clearinventory'] = '清除庫存中的所有物品',
   ['command_clearloadout'] = '取下身上的所有武器',
-  ['command_playerid_param'] = '指定玩家ID或留空(自己)',
   
   -- Locale settings
   ['locale_digit_grouping_symbol'] = ',',

@@ -1,6 +1,5 @@
 Locales['sc'] = {
   -- Inventory
-  ['cash'] = '现金',
   ['inventory'] = '库存 %s / %s',
   ['use'] = '使用',
   ['give'] = '赠送',
@@ -23,8 +22,6 @@ Locales['sc'] = {
   ['received_weapon_withammo'] = '你收到了~b~%s~s~和~o~%sx~s~ %s~s~，来自~b~%s~s~',
   ['received_weapon_hasalready'] = '~b~%s~s~试图给你~y~%s~s~，但你已经拥有了',
   ['received_weapon_noweapon'] = '~b~%s~s~s试图给你~y~%s~s~弹药，但你没有那个武器',
-  ['gave_money'] = '你将~g~$%s~s~赠给了~y~%s~s~',
-  ['received_money'] = '你收到了~g~$%s~s~ from ~b~%s~s~',
   ['gave_account_money'] = '你将 ~g~$%s~s~ (%s) 给予 ~y~%s~s~',
   ['received_account_money'] = '你收到了~g~$%s~s~ (%s) 来自 ~b~%s~s~',
   ['amount_invalid'] = '无效数量',
@@ -33,7 +30,6 @@ Locales['sc'] = {
   ['imp_invalid_quantity'] = '操作失败，无效数量',
   ['imp_invalid_amount'] = '操作失败，无效金额',
   ['threw_standard'] = '你丢弃了~y~%sx~s~~b~%s~s~',
-  ['threw_money'] = '你丢弃了~g~$%s~s~~b~现金~s~',
   ['threw_account'] = '你丢弃了~g~$%s~s~~b~%s~s~',
   ['threw_weapon'] = '你丢弃了~b~%s~s~',
   ['threw_weapon_ammo'] = '你丢弃了~b~%s~s~和~o~%sx%s~s~',
@@ -50,7 +46,9 @@ Locales['sc'] = {
   ['company_nomoney'] = '你受雇的公司太穷了，无法支付你的工资。',
   ['received_paycheck'] = '收到转账',
   ['bank'] = '花园银行',
-  ['black_money'] = '黑钱',
+  ['account_bank'] = '银行',
+  ['account_black_money'] = '黑钱',
+  ['account_money'] = '现金',
   
   ['act_imp'] = '操作失败',
   ['in_vehicle'] = '请离开载具',
@@ -75,7 +73,6 @@ Locales['sc'] = {
   ['chat_clear_all'] = '清除所有人的聊天纪录',
   ['command_clearinventory'] = '清除库存中的所有物品',
   ['command_clearloadout'] = '取下身上的所有武器',
-  ['command_playerid_param'] = '指定玩家ID或留空(自己)',
 
   -- Locale settings
   ['locale_digit_grouping_symbol'] = ',',
