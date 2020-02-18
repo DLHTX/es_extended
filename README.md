@@ -1,11 +1,8 @@
 # es_extended
 
-es_extended is a roleplay framework for FiveM. ESX is short for **Es**sentialMode E**x**tended.
-
-es_extended 是一个基于FiveM的角色扮演框架，它是在EssentialMode（又名ES）的基础上开发的，因此通常被称为ESX-FiveM的基本模式扩展框架。
-
 ### 注意&注意&注意
-诚邀繁体中文翻译，不是简单转换那么简单，需要切合实际进行翻译
+
+**诚邀繁体中文翻译，不是简单转换那么简单，需要切合实际进行翻译**
 
 此版本为魔改版，主要是简繁英语言自适应，当然也可以添加更多语言，不过因为是用于国内，所以只保留了简繁英三语。
 
