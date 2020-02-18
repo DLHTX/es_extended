@@ -1,6 +1,6 @@
 # es_extended
 
-es_extended is a roleplay framework for FiveM. It is developed on top of EssentialMode (aka ES), where the project ESX is originating from - the **Es**sentialMode E**x**tended framework for FiveM.
+es_extended is a roleplay framework for FiveM. ESX is short for **Es**sentialMode E**x**tended.
 
 es_extended 是一个基于FiveM的角色扮演框架，它是在EssentialMode（又名ES）的基础上开发的，因此通常被称为ESX-FiveM的基本模式扩展框架。
 
@@ -45,12 +45,18 @@ es_extended 是一个基于FiveM的角色扮演框架，它是在EssentialMode�
 - Plenty of plugins available
 - 提供大量插件
 
+- Weight based inventory system
+- Weapons support, including support for attachments and tints
+- Supports different money accounts (defaulted with cash, bank and black money)
+- Many official resources available in our GitHub
+- Job system, with grades and clothes support
+- Supports multiple languages, most strings are localized
+- Easy to use API for developers to easily integrate ESX to their projects
+
 ### Requirements / 要求
 This order also applies in the startup order.
 
 - [mysql-async](https://github.com/brouznouf/fivem-mysql-async)
-- [essentialmode](https://github.com/kanersps/essentialmode)
-- [esplugin_mysql](https://github.com/kanersps/esplugin_mysql)
 - [async](https://github.com/ESX-Org/async)
 
 ### Download & Installation & Update / 下载 & 安装 & 升级
@@ -82,10 +88,10 @@ git clone https://github.com/ESX-CN/esx_menu_list [esx]/[ui]/esx_menu_list
 - 配置你的 `server.cfg` 像如下样子
 
 ```
-start mysql-async
-start essentialmode
-start esplugin_mysql
+add_ace resource.es_extended command.add_ace allow
+add_ace resource.es_extended command.add_principal allow
 
+start mysql-async
 start es_extended
 
 start esx_menu_default
