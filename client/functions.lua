@@ -878,6 +878,14 @@ ESX.ShowInventory = function()
 			local formattedMoney = _U('locale_currency', ESX.Math.GroupDigits(v.money))
 			local canDrop = v.name ~= 'bank'
 
+			if v.name == 'bank' then
+				v.lable = _U('account_bank')
+			elseif v.name == 'black_money' then
+				v.lable = _U('account_black_money')
+			elseif v.name == 'money' then
+				v.lable = _U('account_money')
+			end
+			
 			table.insert(elements, {
 				label = ('%s: <span style="color:green;">%s</span>'):format(v.label, formattedMoney),
 				count = v.money,
