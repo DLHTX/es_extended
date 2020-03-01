@@ -14,18 +14,18 @@ AddEventHandler('esx:playerLoaded', function(playerData)
 			})
 		end
 
-		local jobTpl = '<div>{{job_label}} - {{grade_label}}</div>'
-
-		if playerData.job.grade_label == '' or playerData.job.grade_label == playerData.job.label then
-			jobTpl = '<div>{{job_label}}</div>'
-		end
-
 		if Config.Locale == 'tc' then
 			playerData.job.label = playerData.job.label_tc
 			playerData.job.grade_label = playerData.job.grade_label_tc
 		elseif Config.Locale == 'sc' then
 			playerData.job.label = playerData.job.label_sc
 			playerData.job.grade_label = playerData.job.grade_label_sc
+		end
+
+		local jobTpl = '<div>{{job_label}} - {{grade_label}}</div>'
+
+		if playerData.job.grade_label == '' or playerData.job.grade_label == playerData.job.label then
+			jobTpl = '<div>{{job_label}}</div>'
 		end
 
 		ESX.UI.HUD.RegisterElement('job', #playerData.accounts, 0, jobTpl, {
