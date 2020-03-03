@@ -258,7 +258,7 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 				TriggerClientEvent('esx:showNotificationForServer', sourceXPlayer.source, 'ex_inv_lim', targetXPlayer.name)
 			end
 		else
-			TriggerClientEvent('esx:showNotificationForServer', sourceXPlayer.source, 'imp_invalid_quantity')
+			TriggerClientEvent('esx:showNotification', sourceXPlayer.source, 'imp_invalid_quantity')
 		end
 	elseif type == 'item_account' then
 		if itemCount > 0 and sourceXPlayer.getAccount(itemName).money >= itemCount then
@@ -268,7 +268,7 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 			TriggerClientEvent('esx:showNotificationForServer', sourceXPlayer.source, 'gave_account_money', ESX.Math.GroupDigits(itemCount), Config.AccountLabels[itemName], targetXPlayer.name)
 			TriggerClientEvent('esx:showNotificationForServer', targetXPlayer.source, 'received_account_money', ESX.Math.GroupDigits(itemCount), Config.AccountLabels[itemName], sourceXPlayer.name)
 		else
-			TriggerClientEvent('esx:showNotificationForServer', sourceXPlayer.source, 'imp_invalid_amount')
+			TriggerClientEvent('esx:showNotification', sourceXPlayer.source, 'imp_invalid_amount')
 		end
 	elseif type == 'item_weapon' then
 		if sourceXPlayer.hasWeapon(itemName) then
@@ -327,32 +327,32 @@ AddEventHandler('esx:removeInventoryItem', function(type, itemName, itemCount)
 
 	if type == 'item_standard' then
 		if itemCount == nil or itemCount < 1 then
-			xPlayer.showNotification('imp_invalid_quantity')
+			TriggerClientEvent('esx:showNotificationForServer', 'imp_invalid_quantity')
 		else
 			local xItem = xPlayer.getInventoryItem(itemName)
 
 			if (itemCount > xItem.count or xItem.count < 1) then
-				xPlayer.showNotification('imp_invalid_quantity')
+				TriggerClientEvent('esx:showNotification', 'imp_invalid_quantity')
 			else
 				xPlayer.removeInventoryItem(itemName, itemCount)
 				local pickupLabel = ('~y~%s~s~ [~b~%s~s~]'):format(xItem.label, itemCount)
 				ESX.CreatePickup('item_standard', itemName, itemCount, pickupLabel, playerId)
-				xPlayer.showNotification('threw_standard', itemCount, xItem.label)
+				TriggerClientEvent('esx:showNotificationForServer', 'threw_standard', itemCount, xItem.label)
 			end
 		end
 	elseif type == 'item_account' then
 		if itemCount == nil or itemCount < 1 then
-			xPlayer.showNotification('imp_invalid_amount')
+			TriggerClientEvent('esx:showNotification', 'imp_invalid_amount')
 		else
 			local account = xPlayer.getAccount(itemName)
 
 			if (itemCount > account.money or account.money < 1) then
-				xPlayer.showNotification('imp_invalid_amount')
+				TriggerClientEvent('esx:showNotification', 'imp_invalid_amount')
 			else
 				xPlayer.removeAccountMoney(itemName, itemCount)
 				local pickupLabel = ('~y~%s~s~ [~g~%s~s~]'):format(account.label, _U('locale_currency', ESX.Math.GroupDigits(itemCount)))
 				ESX.CreatePickup('item_account', itemName, itemCount, pickupLabel, playerId)
-				xPlayer.showNotification('threw_account', ESX.Math.GroupDigits(itemCount), string.lower(account.label))
+				TriggerClientEvent('esx:showNotificationForServer', 'threw_account', ESX.Math.GroupDigits(itemCount), string.lower(account.label))
 			end
 		end
 	elseif type == 'item_weapon' then
@@ -368,10 +368,10 @@ AddEventHandler('esx:removeInventoryItem', function(type, itemName, itemCount)
 			if weaponObject.ammo and weapon.ammo > 0 then
 				local ammoLabel = weaponObject.ammo.label
 				pickupLabel = ('~y~%s~s~ [~g~%s~s~ %s]'):format(weapon.label, weapon.ammo, ammoLabel)
-				xPlayer.showNotification('threw_weapon_ammo', weapon.label, weapon.ammo, ammoLabel)
+				TriggerClientEvent('esx:showNotificationForServer', xPlayer.source, 'threw_weapon_ammo', weapon.label, weapon.ammo, ammoLabel)
 			else
 				pickupLabel = ('~y~%s~s~'):format(weapon.label)
-				xPlayer.showNotification('threw_weapon', weapon.label)
+				TriggerClientEvent('esx:showNotificationForServer', xPlayer.source, 'threw_weapon', weapon.label)
 			end
 
 			ESX.CreatePickup('item_weapon', itemName, weapon.ammo, pickupLabel, playerId, weapon.components, weapon.tintIndex)
@@ -387,7 +387,7 @@ AddEventHandler('esx:useItem', function(itemName)
 	if count > 0 then
 		ESX.UseItem(source, itemName)
 	else
-		TriggerClientEvent('esx:showNotificationForServer', xPlayer.source, 'act_imp')
+		TriggerClientEvent('esx:showNotification', xPlayer.source, 'act_imp')
 	end
 end)
 
@@ -401,14 +401,14 @@ AddEventHandler('esx:onPickup', function(id)
 				xPlayer.addInventoryItem(pickup.name, pickup.count)
 				success = true
 			else
-				TriggerClientEvent('esx:showNotificationForServer', xPlayer.source, '1')
+				TriggerClientEvent('esx:showNotification', xPlayer.source, 'threw_cannot_pickup')
 			end
 		elseif pickup.type == 'item_account' then
 			success = true
 			xPlayer.addAccountMoney(pickup.name, pickup.count)
 		elseif pickup.type == 'item_weapon' then
 			if xPlayer.hasWeapon(pickup.name) then
-				TriggerClientEvent('esx:showNotificationForServer', xPlayer.source, 'threw_weapon_already')
+				TriggerClientEvent('esx:showNotification', xPlayer.source, 'threw_weapon_already')
 			else
 				success = true
 				xPlayer.addWeapon(pickup.name, pickup.count)

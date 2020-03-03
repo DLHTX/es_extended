@@ -1139,7 +1139,7 @@ end)
 
 RegisterNetEvent('esx:showNotification')
 AddEventHandler('esx:showNotification', function(msg, flash, saveToBrief, hudColorIndex)
-	ESX.ShowNotification(msg, flash, saveToBrief, hudColorIndex)
+	ESX.ShowNotification(_U(msg), flash, saveToBrief, hudColorIndex)
 end)
 
 RegisterNetEvent('esx:showNotificationForServer')
