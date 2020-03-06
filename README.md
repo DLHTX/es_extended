@@ -1,6 +1,14 @@
 # es_extended
 
-### 注意&注意&注意
+es_extended是FiveM的一个角色扮演框架。ESX是EssentialMode Extended的缩写。在FiveM上创建基于经济的角色扮演服务器的通用框架，也是该平台上最受欢迎的框架！
+
+拥有许多额外资源以适合角色扮演服务器，以下是可用功能的一种：
+
+- esx_ambulancejob: 扮演一名医生，使正在流血的玩家复活。 配备车库，重生和放血系统
+- esx_policejob: 通过军械库，服装室和车库在城市巡逻并逮捕犯有罪行的玩家
+- esx_vehicleshop: 在汽车经销商中工作的角色扮演，您可以将汽车卖给玩家
+
+ESX最初由Gizz于2017年为他的朋友开发，当时他正在创建FiveM服务器，并且没有任何经济角色扮演框架可用。 原始代码在一两个星期内就被编写出来，后来开源了，此后一直在进行改进，并对部分内容进行了重写以进一步改进。
 
 **诚邀繁体中文翻译，不是简单转换那么简单，需要切合实际进行翻译**
 
@@ -24,7 +32,7 @@
 
 ### Screenshot preview (todo)
 
-![screenshot](http://i.imgur.com/aPFdJl3.jpg)
+![screenshot](https://s2.ax1x.com/2020/03/06/3qmg3j.jpg)
 
 ### Features / 特色功能
 - Accounts (comes with bank / black money), you can add more accounts
@@ -42,16 +50,16 @@
 - Plenty of plugins available
 - 提供大量插件
 
-- Weight based inventory system
-- Weapons support, including support for attachments and tints
-- Supports different money accounts (defaulted with cash, bank and black money)
-- Many official resources available in our GitHub
-- Job system, with grades and clothes support
-- Supports multiple languages, most strings are localized
-- Easy to use API for developers to easily integrate ESX to their projects
+- 基于重量的库存系统
+- 武器支持，包括配件和色彩支持
+- 支持不同的货币帐户（默认为现金，银行和黑钱）
+- GitHub上有许多官方资源和非官方资源
+- 工作系统，有等级和服装支持
+- 支持多种语言，大多数字符串已本地化
+- 开发人员易于使用的API，可轻松将ESX集成到他们的项目中
+- 通过参数验证，聊天建议和使用FXServer ACL轻松注册您自己的命令
 
-### Requirements / 要求
-This order also applies in the startup order.
+## Requirements / 要求
 
 - [mysql-async](https://github.com/brouznouf/fivem-mysql-async)
 - [async](https://github.com/ESX-Org/async)
@@ -85,6 +93,7 @@ git clone https://github.com/ESX-CN/esx_menu_list [esx]/[ui]/esx_menu_list
 - 配置你的 `server.cfg` 像如下样子
 
 ```
+add_principal group.admin group.user
 add_ace resource.es_extended command.add_ace allow
 add_ace resource.es_extended command.add_principal allow
 
