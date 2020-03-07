@@ -288,6 +288,7 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 	elseif type == 'item_ammo' then
 		if sourceXPlayer.hasWeapon(itemName) then
 			local weaponNum, weapon = sourceXPlayer.getWeapon(itemName)
+				
 			if targetXPlayer.hasWeapon(itemName) then
 				local _, weaponObject = ESX.GetWeapon(itemName)
 
