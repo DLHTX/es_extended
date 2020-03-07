@@ -96,6 +96,7 @@ git clone https://github.com/ESX-CN/esx_menu_list [esx]/[ui]/esx_menu_list
 add_principal group.admin group.user
 add_ace resource.es_extended command.add_ace allow
 add_ace resource.es_extended command.add_principal allow
+add_ace resource.es_extended command.remove_principal allow
 
 start mysql-async
 start es_extended

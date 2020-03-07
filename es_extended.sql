@@ -2,10 +2,11 @@ USE `essentialmode`;
 
 CREATE TABLE `users` (
 	`identifier` VARCHAR(40) NOT NULL,
+	`accounts` LONGTEXT NULL DEFAULT NULL,
 	`group` VARCHAR(50) NULL DEFAULT 'user',
+	`inventory` LONGTEXT NULL DEFAULT NULL,
 	`job` VARCHAR(20) NULL DEFAULT 'unemployed',
 	`job_grade` INT(11) NULL DEFAULT 0,
-	`inventory` LONGTEXT NULL DEFAULT NULL,
 	`loadout` LONGTEXT NULL DEFAULT NULL,
 	`position` VARCHAR(53) NULL DEFAULT '{"x":-269.4,"y":-955.3,"z":31.2,"heading":205.8}',
 
@@ -39,7 +40,7 @@ CREATE TABLE `job_grades` (
 	PRIMARY KEY (`id`)
 );
 
-INSERT INTO `job_grades` VALUES (1,'unemployed',0,'unemployed','Unemployed','待业','待業',200,'{}','{}');
+INSERT INTO `job_grades` VALUES (1,'unemployed',0,'unemployed','Unemployed','无业游民','失業者',200,'{}','{}');
 
 CREATE TABLE `jobs` (
 	`name` VARCHAR(50) NOT NULL,
@@ -51,12 +52,3 @@ CREATE TABLE `jobs` (
 );
 
 INSERT INTO `jobs` VALUES ('unemployed','Unemployed','无业游民','失業者');
-
-CREATE TABLE `user_accounts` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`identifier` VARCHAR(40) NOT NULL,
-	`name` VARCHAR(50) NOT NULL,
-	`money` INT(11) NOT NULL DEFAULT '0',
-
-	PRIMARY KEY (`id`)
-);
