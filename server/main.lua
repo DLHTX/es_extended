@@ -255,8 +255,8 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 			sourceXPlayer.removeAccountMoney(itemName, itemCount)
 			targetXPlayer.addAccountMoney   (itemName, itemCount)
 
-			TriggerClientEvent('esx:showNotificationForServer', sourceXPlayer.source, 'gave_account_money', ESX.Math.GroupDigits(itemCount), Config.AccountLabels[itemName], targetXPlayer.name)
-			TriggerClientEvent('esx:showNotificationForServer', targetXPlayer.source, 'received_account_money', ESX.Math.GroupDigits(itemCount), Config.AccountLabels[itemName], sourceXPlayer.name)
+			TriggerClientEvent('esx:showNotificationForServer', sourceXPlayer.source, 'gave_account_money', ESX.Math.GroupDigits(itemCount), Config.Accounts[itemName], targetXPlayer.name)
+			TriggerClientEvent('esx:showNotificationForServer', targetXPlayer.source, 'received_account_money', ESX.Math.GroupDigits(itemCount), Config.Accounts[itemName], sourceXPlayer.name)
 		else
 			TriggerClientEvent('esx:showNotification', sourceXPlayer.source, 'imp_invalid_amount')
 		end
@@ -287,8 +287,8 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 		end
 	elseif type == 'item_ammo' then
 		if sourceXPlayer.hasWeapon(itemName) then
+			local weaponNum, weapon = sourceXPlayer.getWeapon(itemName)
 			if targetXPlayer.hasWeapon(itemName) then
-				local weaponNum, weapon = sourceXPlayer.getWeapon(itemName)
 				local _, weaponObject = ESX.GetWeapon(itemName)
 
 				if weaponObject.ammo then
