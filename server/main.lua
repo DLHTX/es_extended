@@ -199,6 +199,14 @@ function loadESXPlayer(identifier, playerId)
 	end)
 end
 
+AddEventHandler('chatMessage', function(playerId, author, message)
+	if message:sub(1, 1) == '/' and playerId > 0 then
+		CancelEvent()
+		local commandName = message:sub(1):gmatch("%w+")()
+		TriggerClientEvent('chat:addMessage', playerId, {args = {'^1SYSTEM', _U('commanderror_invalidcommand', commandName)}})
+	end
+end)
+
 AddEventHandler('playerDropped', function(reason)
 	local playerId = source
 	local xPlayer = ESX.GetPlayerFromId(playerId)
@@ -288,7 +296,7 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 	elseif type == 'item_ammo' then
 		if sourceXPlayer.hasWeapon(itemName) then
 			local weaponNum, weapon = sourceXPlayer.getWeapon(itemName)
-				
+
 			if targetXPlayer.hasWeapon(itemName) then
 				local _, weaponObject = ESX.GetWeapon(itemName)
 

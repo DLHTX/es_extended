@@ -93,6 +93,7 @@ Locales['tc'] = {
   ['commanderror_invaliditem'] = '無效的物品名稱',
   ['commanderror_invalidweapon'] = '無效武器',
   ['commanderror_console'] = '該命令不能從控制臺運行',
+  ['commanderror_invalidcommand'] = '^3%s^0 不是有效的命令！',
   ['commanderror_invalidplayerid'] = '沒有在線玩家匹配到該服務id',
   ['commandgeneric_playerid'] = '玩家id',
   
