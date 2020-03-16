@@ -488,8 +488,16 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 		self.triggerEvent('esx:showNotification', msg, flash, saveToBrief, hudColorIndex)
 	end
 
+	self.showNotificationAndTranslate = function(msg, flash, saveToBrief, hudColorIndex)
+		self.triggerEvent('esx:showNotificationAndTranslate', msg, flash, saveToBrief, hudColorIndex)
+	end
+
 	self.showHelpNotification = function(msg, thisFrame, beep, duration)
 		self.triggerEvent('esx:showHelpNotification', msg, thisFrame, beep, duration)
+	end
+
+	self.showHelpNotificationAndTranslate = function(msg, thisFrame, beep, duration)
+		self.triggerEvent('esx:showHelpNotificationAndTranslate', msg, thisFrame, beep, duration)
 	end
 
 	return self

@@ -1139,12 +1139,12 @@ end)
 
 RegisterNetEvent('esx:showNotification')
 AddEventHandler('esx:showNotification', function(msg, flash, saveToBrief, hudColorIndex)
-	ESX.ShowNotification(_U(msg), flash, saveToBrief, hudColorIndex)
+	ESX.ShowNotification(msg, flash, saveToBrief, hudColorIndex)
 end)
 
-RegisterNetEvent('esx:showNotificationForServer')
-AddEventHandler('esx:showNotificationForServer', function(msg, ...)
-	ESX.ShowNotification(_U(msg, ...))
+RegisterNetEvent('esx:showNotificationAndTranslate')
+AddEventHandler('esx:showNotificationAndTranslate', function(msg, flash, saveToBrief, hudColorIndex)
+	ESX.ShowNotification(_U(msg), flash, saveToBrief, hudColorIndex)
 end)
 
 RegisterNetEvent('esx:showAdvancedNotification')
@@ -1162,9 +1162,9 @@ AddEventHandler('esx:showHelpNotification', function(msg, thisFrame, beep, durat
 	ESX.ShowHelpNotification(msg, thisFrame, beep, duration)
 end)
 
-RegisterNetEvent('esx:showHelpNotificationForServer')
-AddEventHandler('esx:showHelpNotificationForServer', function(msg, ...)
-	ESX.ShowHelpNotification(_U(msg, ...))
+RegisterNetEvent('esx:showHelpNotificationAndTranslate')
+AddEventHandler('esx:showHelpNotificationAndTranslate', function(msg, thisFrame, beep, duration, ...)
+	ESX.ShowHelpNotification(_U(msg), thisFrame, beep, duration)
 end)
 
 -- SetTimeout
