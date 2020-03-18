@@ -134,7 +134,7 @@ Locales['tc'] = {
   ['weapon_stickybomb'] = '黏彈',
   ['weapon_smokegrenade'] = '煙霧彈',
   ['weapon_bzgas'] = '催淚瓦斯',
-  ['weapon_molotov'] = '汽油弹',
+  ['weapon_molotov'] = '汽油彈',
   ['weapon_fireextinguisher'] = '滅火器',
   ['weapon_petrolcan'] = '汽油桶',
   ['weapon_ball'] = '棒球',
@@ -178,7 +178,7 @@ Locales['tc'] = {
   ['weapon_doubleaction'] = '左輪手槍',
 
   -- Weapon Components
-  ['component_clip_default'] = '默认弹夹',
+  ['component_clip_default'] = '默認彈夾',
   ['component_clip_extended'] = '延伸彈夾',
   ['component_clip_drum'] = '彈鼓式彈匣',
   ['component_clip_box'] = '盒式彈匣',
@@ -187,7 +187,7 @@ Locales['tc'] = {
   ['component_scope_advanced'] = '高級瞄準鏡',
   ['component_suppressor'] = '消音管',
   ['component_grip'] = '握把',
-  ['component_luxary_finish'] = '豪華武器',
+  ['component_luxary_finish'] = '豪華塗裝',
 
   -- Weapon Ammo
   ['ammo_rounds'] = '發(子彈)',
@@ -196,7 +196,7 @@ Locales['tc'] = {
   ['ammo_petrol'] = '加崙(燃料)',
   ['ammo_firework'] = '發(煙火子彈)',
   ['ammo_rockets'] = '枚(火箭彈)',
-  ['ammo_grenadelauncher'] = '发(榴彈)',
+  ['ammo_grenadelauncher'] = '發(榴彈)',
   ['ammo_grenade'] = '枚(手榴彈)',
   ['ammo_stickybomb'] = '枚(炸彈)',
   ['ammo_pipebomb'] = '枚(炸彈)',
@@ -206,8 +206,8 @@ Locales['tc'] = {
   ['ammo_bzgas'] = '罐',
   ['ammo_ball'] = '顆(球)',
   ['ammo_snowball'] = '顆(雪球)',
-  ['ammo_flare'] = '根(信号棒)',
-  ['ammo_flaregun'] = '發(信号弹)',
+  ['ammo_flare'] = '根(信號棒)',
+  ['ammo_flaregun'] = '發(信號彈)',
 
   -- Weapon Tints
   ['tint_default'] = '默認色調',
