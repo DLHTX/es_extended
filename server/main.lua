@@ -231,10 +231,13 @@ AddEventHandler('esx:updateCoords', function(coords)
 	end
 end)
 
-RegisterNetEvent('esx:updateLoadout')
-AddEventHandler('esx:updateLoadout', function(loadout)
+RegisterNetEvent('esx:updateWeaponAmmo')
+AddEventHandler('esx:updateWeaponAmmo', function(weaponName, ammoCount)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	xPlayer.loadout = loadout
+
+	if xPlayer then
+		xPlayer.updateWeaponAmmo(weaponName, ammoCount)
+	end
 end)
 
 RegisterNetEvent('esx:giveInventoryItem')
