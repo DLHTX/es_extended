@@ -1,5 +1,16 @@
 local isLoadoutLoaded, isPaused, isDead, isFirstSpawn, pickups = false, false, false, true, {}
 
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+
+		if NetworkIsPlayerActive(PlayerId()) then
+			TriggerServerEvent('esx:onPlayerJoined')
+			break
+		end
+	end
+end)
+
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function(playerData)
 	ESX.PlayerLoaded = true
