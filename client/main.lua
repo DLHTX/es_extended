@@ -73,7 +73,7 @@ AddEventHandler('esx:playerLoaded', function(playerData)
 		z = playerData.coords.z + 0.5,
 		heading = playerData.coords.heading
 	}, function()
-		isLoadoutLoaded, isDead = true, false
+		isLoadoutLoaded = true
 		TriggerServerEvent('esx:onPlayerSpawn')
 		TriggerEvent('esx:onPlayerSpawn')
 		TriggerEvent('playerSpawned') -- compatibility with old scripts, will be removed soon
@@ -88,6 +88,7 @@ end)
 RegisterNetEvent('esx:setMaxWeight')
 AddEventHandler('esx:setMaxWeight', function(newMaxWeight) ESX.PlayerData.maxWeight = newMaxWeight end)
 
+AddEventHandler('esx:onPlayerSpawn', function() isDead = false end)
 AddEventHandler('esx:onPlayerDeath', function() isDead = true end)
 AddEventHandler('skinchanger:loadDefaultModel', function() isLoadoutLoaded = false end)
 
@@ -314,6 +315,7 @@ AddEventHandler('esx:createPickup', function(pickupId, label, playerId, type, na
 	SetEntityAsMissionEntity(pickupObject, true, false)
 	PlaceObjectOnGroundProperly(pickupObject)
 	FreezeEntityPosition(pickupObject, true)
+	SetEntityCollision(pickupObject, false, true)
 
 	pickups[pickupId] = {
 		id = pickupId,
@@ -351,6 +353,7 @@ AddEventHandler('esx:createMissingPickups', function(missingPickups)
 		SetEntityAsMissionEntity(pickupObject, true, false)
 		PlaceObjectOnGroundProperly(pickupObject)
 		FreezeEntityPosition(pickupObject, true)
+		SetEntityCollision(pickupObject, false, true)
 
 		pickups[pickupId] = {
 			id = pickupId,
@@ -537,24 +540,27 @@ end)
 
 -- Update current player coords
 Citizen.CreateThread(function()
-	local previousCoords = vector3(0, 0, 0)
-
 	-- wait for player to restore coords
 	while not isLoadoutLoaded do
 		Citizen.Wait(1000)
 	end
 
-	while true do
-		Citizen.Wait(Config.CoordsSyncInterval)
-		local playerPed = PlayerPedId()
-		local playerCoords = GetEntityCoords(playerPed)
-		local distance = #(playerCoords - previousCoords)
+	local previousCoords = vector3(ESX.PlayerData.coords.x, ESX.PlayerData.coords.y, ESX.PlayerData.coords.z)
 
-		if distance > 10 then
-			previousCoords = playerCoords
-			local playerHeading = ESX.Math.Round(GetEntityHeading(playerPed), 1)
-			local formattedCoords = {x = ESX.Math.Round(playerCoords.x, 1), y = ESX.Math.Round(playerCoords.y, 1), z = ESX.Math.Round(playerCoords.z, 1), heading = playerHeading}
-			TriggerServerEvent('esx:updateCoords', formattedCoords)
+	while true do
+		Citizen.Wait(1000)
+		local playerPed = PlayerPedId()
+
+		if DoesEntityExist(playerPed) then
+			local playerCoords = GetEntityCoords(playerPed)
+			local distance = #(playerCoords - previousCoords)
+
+			if distance > 1 then
+				previousCoords = playerCoords
+				local playerHeading = ESX.Math.Round(GetEntityHeading(playerPed), 1)
+				local formattedCoords = {x = ESX.Math.Round(playerCoords.x, 1), y = ESX.Math.Round(playerCoords.y, 1), z = ESX.Math.Round(playerCoords.z, 1), heading = playerHeading}
+				TriggerServerEvent('esx:updateCoords', formattedCoords)
+			end
 		end
 	end
 end)
