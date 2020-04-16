@@ -73,6 +73,14 @@ ESX.ShowHelpNotification = function(msg, thisFrame, beep, duration)
 	end
 end
 
+ESX.ShowFloatingHelpNotification = function(msg, coords)
+	AddTextEntry('esxFloatingHelpNotification', msg)
+	SetFloatingHelpTextWorldPosition(1, coords)
+	SetFloatingHelpTextStyle(1, 1, 2, -1, 3, 0)
+	BeginTextCommandDisplayHelp('esxFloatingHelpNotification')
+	EndTextCommandDisplayHelp(2, false, false, -1)
+end
+
 ESX.TriggerServerCallback = function(name, cb, ...)
 	ESX.ServerCallbacks[ESX.CurrentRequestId] = cb
 
@@ -427,33 +435,65 @@ ESX.Game.IsVehicleEmpty = function(vehicle)
 	return passengers == 0 and driverSeatFree
 end
 
-ESX.Game.GetObjects = function() return EnumerateObjects() end
-ESX.Game.GetPeds = function() return EnumeratePeds() end
-ESX.Game.GetVehicles = function() return EnumerateVehicles() end
+ESX.Game.GetObjects = function()
+	local objects = {}
 
-ESX.Game.GetPlayers = function()
-	local players = {}
+	for object in EnumerateObjects() do
+		table.insert(objects, object)
+	end
 
-	for _,player in ipairs(GetActivePlayers()) do
+	return objects
+end
+
+ESX.Game.GetPeds = function(onlyOtherPeds)
+	local peds, myPed = {}, PlayerPedId()
+
+	for ped in EnumeratePeds() do
+		if ((onlyOtherPeds and ped ~= myPed) or not onlyOtherPeds) then
+			table.insert(peds, ped)
+		end
+	end
+
+	return peds
+end
+
+ESX.Game.GetVehicles = function()
+	local vehicles = {}
+
+	for vehicle in EnumerateVehicles() do
+		table.insert(vehicles, vehicle)
+	end
+
+	return vehicles
+end
+
+ESX.Game.GetPlayers = function(onlyOtherPlayers, returnKeyValue, returnPeds)
+	local players, myPlayer = {}, PlayerId()
+
+	for k,player in ipairs(GetActivePlayers()) do
 		local ped = GetPlayerPed(player)
 
-		if DoesEntityExist(ped) then
-			table.insert(players, player)
+		if DoesEntityExist(ped) and ((onlyOtherPlayers and player ~= myPlayer) or not onlyOtherPlayers) then
+			if returnKeyValue then
+				players[player] = ped
+			else
+				table.insert(players, returnPeds and ped or player)
+			end
 		end
 	end
 
 	return players
 end
 
-ESX.Game.GetClosestObject = function(coords, modelFilter) return ESX.Game.GetClosestEntity(EnumerateObjects(), coords, modelFilter) end
-ESX.Game.GetClosestPed = function(coords, modelFilter) return ESX.Game.GetClosestEntity(EnumeratePeds(), coords, modelFilter) end
-ESX.Game.GetClosestPlayer = function(coords, modelFilter) return ESX.Game.GetClosestEntity(ESX.Game.GetPlayers(), coords, modelFilter) end
-ESX.Game.GetClosestVehicle = function(coords, modelFilter) return ESX.Game.GetClosestEntity(EnumerateVehicles(), coords, modelFilter) end
-ESX.Game.GetPlayersInArea = function(coords, maxDistance) return EnumerateEntitiesWithinDistance(ESX.Game.GetPlayers(), coords, maxDistance) end
-ESX.Game.GetVehiclesInArea = function(coords, maxDistance) return EnumerateEntitiesWithinDistance(EnumerateVehicles(), coords, maxDistance) end
+ESX.Game.GetClosestObject = function(coords, modelFilter) return ESX.Game.GetClosestEntity(ESX.Game.GetObjects(), false, coords, modelFilter) end
+ESX.Game.GetClosestPed = function(coords, modelFilter) return ESX.Game.GetClosestEntity(ESX.Game.GetPeds(true), false, coords, modelFilter) end
+ESX.Game.GetClosestPlayer = function(coords, modelFilter) return ESX.Game.GetClosestEntity(ESX.Game.GetPlayers(true, true), true, coords, modelFilter) end
+ESX.Game.GetClosestVehicle = function(coords, modelFilter) return ESX.Game.GetClosestEntity(ESX.Game.GetVehicles(), false, coords, modelFilter) end
+ESX.Game.GetPlayersInArea = function(coords, maxDistance) return EnumerateEntitiesWithinDistance(ESX.Game.GetPlayers(true, true), true, coords, maxDistance) end
+ESX.Game.GetVehiclesInArea = function(coords, maxDistance) return EnumerateEntitiesWithinDistance(ESX.Game.GetVehicles(), false, coords, maxDistance) end
 ESX.Game.IsSpawnPointClear = function(coords, maxDistance) return #ESX.Game.GetVehiclesInArea(coords, maxDistance) == 0 end
 
-ESX.Game.GetClosestEntity = function(entities, coords, modelFilter)
+ESX.Game.GetClosestEntity = function(entities, isPlayerEntities, coords, modelFilter)
 	local closestEntity, closestEntityDistance, filteredEntities = -1, -1, nil
 
 	if coords then
@@ -466,18 +506,18 @@ ESX.Game.GetClosestEntity = function(entities, coords, modelFilter)
 	if modelFilter then
 		filteredEntities = {}
 
-		for k,entity in ipairs(entities) do
+		for k,entity in pairs(entities) do
 			if modelFilter[GetEntityModel(entity)] then
 				table.insert(filteredEntities, entity)
 			end
 		end
 	end
 
-	for k,entity in ipairs(filteredEntities or entities) do
+	for k,entity in pairs(filteredEntities or entities) do
 		local distance = #(coords - GetEntityCoords(entity))
 
 		if closestEntityDistance == -1 or distance < closestEntityDistance then
-			closestEntity, closestEntityDistance = entity, distance
+			closestEntity, closestEntityDistance = isPlayerEntities and k or entity, distance
 		end
 	end
 
@@ -504,10 +544,10 @@ ESX.Game.GetVehicleProperties = function(vehicle)
 		local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
 		local extras = {}
 
-		for id=0, 12 do
-			if DoesExtraExist(vehicle, id) then
-				local state = IsVehicleExtraTurnedOn(vehicle, id) == 1
-				extras[tostring(id)] = state
+		for extraId=0, 12 do
+			if DoesExtraExist(vehicle, extraId) then
+				local state = IsVehicleExtraTurnedOn(vehicle, extraId) == 1
+				extras[tostring(extraId)] = state
 			end
 		end
 
@@ -625,11 +665,11 @@ ESX.Game.SetVehicleProperties = function(vehicle, props)
 		end
 
 		if props.extras then
-			for id,enabled in pairs(props.extras) do
+			for extraId,enabled in pairs(props.extras) do
 				if enabled then
-					SetVehicleExtra(vehicle, tonumber(id), 0)
+					SetVehicleExtra(vehicle, tonumber(extraId), 0)
 				else
-					SetVehicleExtra(vehicle, tonumber(id), 1)
+					SetVehicleExtra(vehicle, tonumber(extraId), 1)
 				end
 			end
 		end
@@ -873,7 +913,7 @@ ESX.ShowInventory = function()
 										}, function(data3, menu3)
 											local quantity = tonumber(data3.value)
 
-											if quantity then
+											if quantity and quantity > 0 and data.current.count >= quantity then
 												TriggerServerEvent('esx:giveInventoryItem', selectedPlayerId, type, item, quantity)
 												menu3.close()
 												menu2.close()
@@ -915,7 +955,7 @@ ESX.ShowInventory = function()
 						}, function(data2, menu2)
 							local quantity = tonumber(data2.value)
 
-							if quantity then
+							if quantity and quantity > 0 and data.current.count >= quantity then
 								menu2.close()
 								menu1.close()
 								TaskPlayAnim(playerPed, dict, anim, 8.0, 1.0, 1000, 16, 0.0, false, false, false)
@@ -946,8 +986,8 @@ ESX.ShowInventory = function()
 							}, function(data2, menu2)
 								local quantity = tonumber(data2.value)
 
-								if quantity then
-									if pedAmmo >= quantity and quantity > 0 then
+								if quantity and quantity > 0 then
+									if pedAmmo >= quantity then
 										TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_ammo', item, quantity)
 										menu2.close()
 										menu1.close()
