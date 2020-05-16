@@ -1,6 +1,6 @@
 # es_extended
 
-es_extended是FiveM的一个角色扮演框架。ESX是EssentialMode Extended的缩写。在FiveM上创建基于经济的角色扮演服务器的通用框架，也是该平台上最受欢迎的框架！
+es_extended is a roleplay framework for FiveM. The to-go framework for creating an economy based roleplay server on FiveM and most popular on the platform, too!
 
 拥有许多额外资源以适合角色扮演服务器，以下是可用功能的一种：
 
@@ -22,9 +22,8 @@ ESX最初由Gizz于2017年为他的朋友开发，当时他正在创建FiveM服�
 
 点击链接加入群聊【FiveM中文网官方群】：https://jq.qq.com/?_wv=1027&k=5Y059hd
 
-<<<<<<< HEAD
 官方qq群：208486207
-=======
+
 ## Rent Server
 
 ![Iceline hosting](https://media.discordapp.net/attachments/667787270375473183/667790233441533952/banner.gif)
@@ -40,7 +39,6 @@ There is an optional Managed Support Addon available for game servers and Game V
 Go to [Iceline Hosting](https://iceline-hosting.com/billing/aff.php?aff=94) and use promo code `ESX` for 15% off the first month on FiveM game servers, Game VPS's and Singapore VPS's.
 
 ## Download & Installation
->>>>>>> upstream/master
 
 ### Links & Read more / 链接&阅读更多
 - [ESX Documentation / ESX 官方文档](https://esx-org.github.io/)
@@ -158,7 +156,7 @@ UPDATE `job_grades` SET `label_sc`='待业',`label_tc`='待業' WHERE `name`='un
 
 # Legal
 ### License
-es_extended - EssentialMode Extended framework for FiveM
+es_extended - ESX framework for FiveM
 
 Copyright (C) 2015-2020 Jérémie N'gadi
 
